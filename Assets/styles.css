@@ -1,0 +1,515 @@
+:root{
+  --bg:#0f1720;
+  --card:#0b1220;
+  --muted:#94a3b8;
+  --accent:#4f46e5;
+  --glass: rgba(255,255,255,0.03);
+  --glass-2: rgba(255,255,255,0.02);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+/* Hide native scrollbars but keep scrolling accessible */
+html, body {
+  /* Firefox */
+  scrollbar-width: none;
+  /* IE 10+ */
+  -ms-overflow-style: none;
+}
+/* WebKit-based browsers */
+html::-webkit-scrollbar, body::-webkit-scrollbar {
+  width: 0; /* remove horizontal/vertical scrollbar */
+  height: 0;
+}
+body{
+  margin:0;
+  font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;
+  background: linear-gradient(180deg,#081022 0%, #05101a 100%);
+  color:#e6eef8;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  padding-top:72px;
+}
+.container{max-width:1100px;margin:0 auto;padding:2rem}
+.site-header{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  z-index:120;
+  height:72px;
+  display:block;
+  border-bottom:1px solid rgba(255,255,255,0.03);
+  overflow:hidden;
+}
+
+/* animated iridescent gradient moving like an LCD backlight */
+.site-header::before{
+  content:'';
+  position:absolute;inset:0;z-index:0;
+  background: linear-gradient(90deg, rgba(79,70,229,0.18) 0%, rgba(6,182,212,0.12) 25%, rgba(99,102,241,0.12) 50%, rgba(6,182,212,0.08) 75%, rgba(79,70,229,0.16) 100%);
+  background-size:200% 100%;
+  filter:contrast(1.02) saturate(1.1);
+  animation:lc-backlight 8s linear infinite;
+  transform:translateZ(0);
+}
+
+/* faint scanlines for an LCD feel */
+.site-header::after{
+  content:'';
+  position:absolute;left:0;right:0;top:0;height:100%;z-index:1;pointer-events:none;
+  background-image:repeating-linear-gradient(180deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.00) 1px);
+  mix-blend-mode:overlay;opacity:0.6;transform:translateY(0);
+  animation:lc-scan 6s linear infinite;
+}
+
+/* keep content above effects */
+.site-header .container{position:relative;z-index:2}
+
+@keyframes lc-backlight{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+@keyframes lc-scan{
+  0%{opacity:0.55}
+  50%{opacity:0.25}
+  100%{opacity:0.55}
+}
+
+/* subtle flicker to mimic electronics (low amplitude) */
+@keyframes lc-flicker{
+  0%{opacity:1}
+  50%{opacity:0.94}
+  100%{opacity:1}
+}
+.site-header::before, .site-header::after{animation-timing-function:linear}
+.site-header{animation:lc-flicker 3s infinite}
+
+/* Logo treatment — subtle metallic / LCD text */
+.logo{position:relative;z-index:3;background:linear-gradient(90deg,#e6eef8 0%, rgba(255,255,255,0.9) 40%, rgba(255,255,255,0.65) 60%, #cfe7ff 100%);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:800;letter-spacing:-0.02em}
+
+/* Nav links — glowing LCD style */
+.nav{position:relative;z-index:3}
+/* Rounded pill-style nav (frosted glass) */
+.site-header .nav {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px; /* creates the pill padding */
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.04);
+  border-radius: 999px; /* fully rounded */
+  backdrop-filter: blur(6px) saturate(1.08);
+  -webkit-backdrop-filter: blur(6px) saturate(1.08);
+  box-shadow: 0 8px 30px rgba(2,6,23,0.45);
+  transform: translateZ(0);
+  max-width:520px; /* limit how wide the pill can grow */
+  width:auto;      /* allow it to size to content up to the max */
+  padding-left:10px; /* slightly tighten horizontal padding */
+  padding-right:10px;
+}
+
+/* Links inside the pill get breathing room and their own micro-pill on hover */
+.nav a{
+  margin-left:0.5rem; /* reduced separation since nav itself has padding */
+  padding: 8px 12px;
+  border-radius: 999px;
+  transition: color 260ms cubic-bezier(.2,.9,.2,1), transform 260ms, background 260ms, box-shadow 260ms;
+}
+
+.nav a::after{ /* keep underline animation but hide it visually to favor the pill */
+  opacity:0; transform:none; display:none;
+}
+
+.nav a:hover, .nav a:focus{
+  color:#fff;
+  text-shadow:0 8px 22px rgba(79,70,229,0.12);
+  transform: translateY(-2px) scale(1.02);
+  background: linear-gradient(90deg, rgba(79,70,229,0.06), rgba(6,182,212,0.04));
+  box-shadow: 0 8px 20px rgba(2,6,23,0.45);
+}
+
+/* Adjust the liquid indicator to sit nicely inside the rounded pill */
+.nav-indicator{
+  position:absolute;
+  bottom:6px; /* slightly higher so it sits within the pill */
+  height:40px;
+  border-radius:999px;
+  left:0;
+  transform:translateX(0);
+  width:0;
+  z-index:2;
+  pointer-events:none;
+  background: rgba(255,255,255,0.035);
+  backdrop-filter: blur(10px) saturate(1.12);
+  -webkit-backdrop-filter: blur(10px) saturate(1.12);
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: 0 12px 30px rgba(2,6,23,0.55), inset 0 1px 0 rgba(255,255,255,0.03);
+  transition:opacity 220ms linear, transform 220ms linear, width 220ms cubic-bezier(.16,.84,.33,1);
+  opacity:0.98;
+}
+
+.nav-indicator::before{ inset:3px; }
+
+/* hide indicator gracefully on mouseleave */
+.nav.indicator-hidden .nav-indicator{ opacity: 0; transform: translateX(0) scale(0.98); }
+
+@media (max-width:600px){
+  .site-header .nav{ padding:6px 10px; max-width:320px; }
+  .nav a{ padding:8px 10px; }
+  .nav-indicator{ height:34px; bottom:5px; }
+}
+
+@media (max-width:900px){
+  .site-header .nav{ max-width:420px; }
+}
+
+/* Floating, centered nav: make the nav pill float in the header and occupy 50% width on desktop */
+.site-header .container{
+  /* keep existing positioning but ensure it's a flex context for logo/layout */
+  position:relative; /* ensure absolute children are positioned inside */
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.site-header .nav{
+  /* float the nav and center it in the header */
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  width:50%;           /* requested: reduce width to 50% of the page/header */
+  max-width:520px;     /* cap so it doesn't stretch excessively */
+  display:inline-flex; /* preserve pill layout */
+  justify-content:center;
+  z-index:30;          /* sit above header pseudo-elements */
+}
+
+/* Slightly lift the nav visually from the header (floating effect) */
+.site-header .nav{ box-shadow: 0 14px 40px rgba(2,6,23,0.5); }
+
+/* Mobile / tablet fallbacks: make nav flow naturally and occupy more width */
+@media (max-width:900px){
+  .site-header .nav{ width:60%; max-width:420px; }
+}
+@media (max-width:600px){
+  /* On small screens keep nav inline (no absolute) so it doesn't overlap content */
+  .site-header .nav{
+    position:static;
+    transform:none;
+    width:90%;
+    max-width:none;
+    margin:0 auto; /* center in the container */
+  }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .site-header .nav, .nav a, .nav-indicator{ transition:none; }
+}
+
+/* active-like pulse for currently focused link */
+.nav a:active{transform:translateY(-1px) scale(0.995)}
+
+/* small moving iridescent highlight behind nav on hover */
+.site-header .container:hover{filter:brightness(1.02)}
+
+/* Liquid indicator under nav links */
+.nav{position:relative}
+.nav-indicator{
+  position:absolute;
+  bottom:10px;
+  height:34px;
+  border-radius:999px;
+  left:0;
+  transform:translateX(0);
+  width:0;
+  z-index:2;
+  pointer-events:none;
+  background: rgba(255,255,255,0.04);
+  backdrop-filter: blur(8px) saturate(1.2);
+  -webkit-backdrop-filter: blur(8px) saturate(1.2);
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: 0 10px 30px rgba(2,6,23,0.6), inset 0 1px 0 rgba(255,255,255,0.03);
+  transition:opacity 260ms linear;
+  opacity:0.98;
+}
+
+/* inner accent glow */
+.nav-indicator::before{
+  content:'';position:absolute;inset:2px;border-radius:999px;background:linear-gradient(90deg, rgba(79,70,229,0.12), rgba(6,182,212,0.08));pointer-events:none;mix-blend-mode:screen;}
+
+/* when hidden */
+.nav.indicator-hidden .nav-indicator{opacity:0}
+
+@media (prefers-reduced-motion: reduce){
+  .nav-indicator{transition:none;}
+}
+
+/* responsive adjustments */
+@media (max-width:600px){
+  .site-header{height:64px}
+  body{padding-top:64px}
+  .logo{font-size:1.05rem}
+  .nav a{margin-left:0.6rem}
+}
+
+/* prefer-reduced-motion fallback */
+@media (prefers-reduced-motion: reduce){
+  .site-header::before,.site-header::after,.site-header{animation:none}
+  .nav a::after{transition:none}
+}
+.hero{padding:6rem 0 4rem}
+.hero-grid{display:grid;grid-template-columns:1fr 340px;gap:2.5rem;align-items:center}
+.eyebrow{color:var(--muted);margin:0 0 0.5rem}
+.title{font-size:2rem;margin:0 0 1rem}
+.lead{color:var(--muted)}
+.cta-row{margin:1.25rem 0}
+.btn{display:inline-block;padding:0.65rem 1rem;border-radius:10px;border:1px solid rgba(255,255,255,0.06);text-decoration:none;color:inherit}
+.btn.primary{background:linear-gradient(90deg,var(--accent),#06b6d4);box-shadow:0 8px 24px rgba(79,70,229,0.18);color:white}
+.btn.ghost{background:transparent}
+.skills{display:flex;gap:0.5rem;margin-top:1rem}
+.skills span{background:var(--glass);padding:0.35rem 0.6rem;border-radius:999px;color:var(--muted);font-size:0.9rem}
+.hero-card .profile-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:1rem;border-radius:14px;border:1px solid rgba(255,255,255,0.04);display:flex;gap:1rem;align-items:center}
+.profile-card img{width:72px;height:72px;border-radius:12px;object-fit:cover}
+.profile-info h3{margin:0}
+.socials a{color:var(--muted);margin-right:0.5rem}
+.section-title{font-size:1.25rem;margin-bottom:1rem}
+
+/* Make the Projects section wider and emphasize LCD 'liquid crystal' background for project cards */
+.projects .container{
+  max-width:1300px; /* wider layout for projects */
+  padding-left:2.5rem;
+  padding-right:2.5rem;
+}
+
+.project-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:1.5rem; /* more breathing room */
+  max-width:1200px; /* center grid within the projects container */
+  margin:0 auto;
+}
+
+/* Stronger LCD visuals for project cards */
+.project{
+  border-radius:16px;
+  padding:1.25rem;
+  background: linear-gradient(180deg, rgba(255,255,255,0.024), rgba(255,255,255,0.008));
+  border:1px solid rgba(255,255,255,0.07);
+  box-shadow: 0 24px 60px rgba(2,6,23,0.6), inset 0 1px 0 rgba(255,255,255,0.03);
+  backdrop-filter: blur(12px) saturate(1.18);
+  -webkit-backdrop-filter: blur(12px) saturate(1.18);
+  position:relative;
+  overflow:hidden;
+}
+
+/* sheen */
+.project::before{
+  content:'';
+  position:absolute;
+  left:-30%;
+  right:-30%;
+  top:-60%;
+  height:70%;
+  background:linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0));
+  transform:rotate(-14deg);
+  opacity:0.55;
+  pointer-events:none;
+}
+
+/* subtle scanlines */
+.project::after{
+  content:'';
+  position:absolute;inset:0;pointer-events:none;mix-blend-mode:overlay;opacity:0.06;
+  background-image:repeating-linear-gradient(180deg, rgba(255,255,255,0.018) 0px, rgba(255,255,255,0.00) 1px);
+}
+
+/* slightly larger hover lift for LCD feel */
+.project:hover{ transform:translateY(-10px) scale(1.015); box-shadow:0 30px 80px rgba(2,6,23,0.65); }
+
+@media (max-width:900px){
+  .project-grid{ grid-template-columns:repeat(2,1fr); max-width:920px; }
+}
+@media (max-width:600px){
+  .project-grid{ grid-template-columns:1fr; max-width:540px; padding:0 1rem; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .project::before, .project::after{ display:none }
+  .project{ transition:none; transform:none }
+}
+
+.timeline .job{background:var(--glass-2);padding:1rem;border-radius:10px;margin-bottom:0.8rem}
+.contact-form{max-width:640px}
+.form-row{display:flex;gap:0.5rem}
+.form-row input{flex:1;padding:0.6rem;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit}
+textarea{width:100%;min-height:120px;margin-top:0.75rem;padding:0.75rem;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit}
+.site-footer{padding:1.5rem 0;color:var(--muted)}
+.noise{position:fixed;inset:0;pointer-events:none;background-image:radial-gradient(rgba(255,255,255,0.01) 1px, transparent 1px);background-size:20px 20px;opacity:0.6}
+@media (max-width:900px){
+  .hero-grid{grid-template-columns:1fr}
+  .project-grid{grid-template-columns:1fr}
+}
+@media (max-width:600px){
+  .site-header{height:64px}
+  body{padding-top:64px}
+}
+
+/* Improved smoother, slightly slower reveal */
+.reveal{
+  opacity:0;
+  transform:translateY(18px);
+  transition:opacity 820ms cubic-bezier(.16,.84,.33,1), transform 820ms cubic-bezier(.16,.84,.33,1);
+  will-change:opacity,transform;
+}
+.reveal.visible{opacity:1;transform:none}
+.reveal--from-left{transform:translateX(-22px);}
+.reveal--from-left.visible{transform:none}
+.reveal--from-right{transform:translateX(22px);}
+.reveal--from-right.visible{transform:none}
+.reveal--from-bottom{transform:translateY(22px);}
+.reveal--scale{transform:translateY(8px) scale(.985);}
+.reveal--scale.visible{transform:none}
+
+/* support data-delay on elements for staggered reveals (keep presets) */
+.reveal[data-delay="0"]{transition-delay:0ms}
+.reveal[data-delay="50"]{transition-delay:50ms}
+.reveal[data-delay="100"]{transition-delay:100ms}
+.reveal[data-delay="150"]{transition-delay:150ms}
+.reveal[data-delay="200"]{transition-delay:200ms}
+.reveal[data-delay="300"]{transition-delay:300ms}
+
+/* make project cards appear slightly later and add smoother hover transition */
+.project.reveal{transition-duration:860ms}
+.project{transition:transform 320ms cubic-bezier(.2,.9,.2,1), box-shadow 320ms cubic-bezier(.2,.9,.2,1)}
+.project:hover{box-shadow:0 18px 40px rgba(2,6,23,0.45)}
+
+/* prefer-reduced-motion: disable animations */
+@media (prefers-reduced-motion: reduce){
+  .reveal{transition:none;transform:none;opacity:1}
+  .project{transition:none}
+}
+
+/* Scroll progress bar */
+.scroll-progress{position:fixed;left:0;right:0;top:0;height:4px;z-index:160;pointer-events:none;backdrop-filter:blur(4px)}
+.scroll-progress__bar{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),#06b6d4);box-shadow:0 6px 18px rgba(6,8,20,0.35);transform-origin:left;transition:width 420ms cubic-bezier(.16,.84,.33,1)}
+
+/* subtle pulsing when scrolling */
+.scroll-progress.scrolling .scroll-progress__bar{box-shadow:0 10px 30px rgba(6,8,20,0.45);}
+
+@media (prefers-reduced-motion:reduce){
+  .scroll-progress__bar{transition:none}
+}
+
+/* Use a scrollable app container instead of the window to fully hide native scrollbars */
+html, body { height:100%; overflow:hidden; }
+.site-scroll{height:100vh;overflow:auto;-webkit-overflow-scrolling:touch}
+
+/* Hide native scrollbars for the scroll container */
+.site-scroll{scrollbar-width:none;-ms-overflow-style:none}
+.site-scroll::-webkit-scrollbar{width:0;height:0}
+
+/* keep keyboard focus outlines */
+:focus{outline-offset:2px}
+
+/* iPhone-like LCD panel styling for all main containers */
+.lcd-panel{
+  position:relative;
+  background: linear-gradient(180deg, rgba(255,255,255,0.018), rgba(255,255,255,0.01));
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius:14px;
+  box-shadow: 0 18px 40px rgba(2,6,23,0.55), inset 0 1px 0 rgba(255,255,255,0.02);
+  backdrop-filter: blur(10px) saturate(1.15);
+  -webkit-backdrop-filter: blur(10px) saturate(1.15);
+  overflow:hidden;
+  transition:transform 360ms cubic-bezier(.2,.9,.2,1), box-shadow 360ms;
+}
+.lcd-panel::before{
+  /* subtle sheen */
+  content:'';position:absolute;left:-20%;right:-20%;top:-40%;height:60%;z-index:1;pointer-events:none;
+  background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.00));
+  transform:rotate(-12deg) translateZ(0);opacity:0.6;
+}
+.lcd-panel::after{
+  /* fine scanlines */
+  content:'';position:absolute;inset:0;z-index:2;pointer-events:none;mix-blend-mode:overlay;opacity:0.08;
+  background-image:repeating-linear-gradient(180deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.00) 1px);
+}
+.lcd-panel:hover{transform:translateY(-8px) scale(1.01);box-shadow:0 28px 60px rgba(2,6,23,0.6)}
+
+/* Apply LCD look to common containers */
+.project, .hero-card .profile-card, .timeline .job, .contact-form, .site-footer{
+  /* maintain existing visual rules but layer the lcd-panel styling */
+  background:transparent; /* allow lcd-panel to control background */
+}
+.project.lcd, .hero-card .profile-card.lcd, .timeline .job.lcd, .contact-form.lcd, .site-footer.lcd{
+  /* apply lcd base */
+  display:block;
+}
+
+/* Utility: ensure elements selected become lcd-panel even if not given the class */
+.project, .hero-card .profile-card, .timeline .job, .contact-form, .site-footer{
+  /* wrap existing visuals with lcd-panel appearance */
+  border-radius:14px; /* keep corners consistent */
+  box-shadow: 0 18px 40px rgba(2,6,23,0.45), inset 0 1px 0 rgba(255,255,255,0.02);
+  background: linear-gradient(180deg, rgba(255,255,255,0.018), rgba(255,255,255,0.01));
+  border:1px solid rgba(255,255,255,0.06);
+  backdrop-filter: blur(8px) saturate(1.1);
+  -webkit-backdrop-filter: blur(8px) saturate(1.1);
+}
+
+/* bring pseudo-elements above content when needed */
+.project .project-body, .hero-card .profile-card > .profile-info, .timeline .job, .contact-form{position:relative;z-index:3}
+
+/* Slight inner padding and spacing consistency */
+.project{padding:1.1rem}
+.hero-card .profile-card{padding:1rem}
+.timeline .job{padding:1rem}
+.contact-form{padding:1rem;border-radius:12px}
+.site-footer{padding:1.25rem 0}
+
+/* reduce motion fallback */
+@media (prefers-reduced-motion: reduce){
+  .lcd-panel, .project, .hero-card .profile-card, .timeline .job, .contact-form, .site-footer{transition:none;transform:none}
+  .lcd-panel::before, .lcd-panel::after{display:none}
+}
+
+/* ensure contrast for text inside lcd panels */
+.project h3, .profile-info h3, .timeline .job h3{color:#eaf4ff}
+
+/* Fix: ensure anchored headings are not hidden behind the fixed header
+   Use scroll-margin-top so browser scrolling (and smooth scroll) offsets targets
+   to account for the header height. Responsive override for smaller screens. */
+section[id], .section-title, [id].section-title, [id] {
+  scroll-margin-top: calc(var(--header-height, 72px) + 12px);
+}
+
+@media (max-width:600px){
+  section[id], .section-title, [id].section-title, [id] {
+    scroll-margin-top: calc(var(--header-height, 64px) + 12px);
+  }
+}
+
+/* Ensure header doesn't clip the floating nav and keep container vertically compact */
+.site-header{ /* allow shadows and the floating pill to be visible */
+  overflow: visible; /* previously hidden and clipping the nav */
+}
+.site-header .container{
+  padding-top: 0; /* remove the 2rem vertical padding inherited from .container */
+  padding-bottom: 0;
+  padding-left: 2rem; /* keep horizontal gutter */
+  padding-right: 2rem;
+  height: 100%; /* fill the header height so centering works */
+  align-items: center; /* ensure vertical centering */
+  display: flex;
+}
+
+/* Slightly nudge the nav down so it's comfortably inside the header on tall displays */
+.site-header .nav{ top:52%; transform: translate(-50%,-50%); }
+
+@media (max-width:600px){
+  /* keep small-screen layout unchanged */
+  .site-header{overflow:visible}
+  .site-header .container{padding-left:1rem;padding-right:1rem}
+}
