@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Narendra — Software Engineer</title>
+  <meta name="description" content="Narendra — Software Engineer. Building scalable systems, distributed systems, and low-latency services. Seeking SWE roles at Google." />
+  <meta name="theme-color" content="#071029" />
+  <link rel="stylesheet" href="assets/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="icon" href="assets/favicon.ico" />
+</head>
+<body>
+  <div class="scroll-progress" aria-hidden="true">
+    <div class="scroll-progress__bar"></div>
+  </div>
+
+  <header class="site-header" role="banner">
+    <div class="container">
+      <nav class="nav" role="navigation" aria-label="Main navigation">
+        <div class="nav-indicator" aria-hidden="true"></div>
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#experience">Experience</a>
+        <a href="#education">Education</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="site-scroll">
+    <main id="main">
+
+    <section class="hero" id="about" aria-labelledby="about-title">
+      <div class="container hero-grid">
+        <div class="hero-text reveal reveal--from-left" data-delay="0">
+          <p class="eyebrow">Software Engineer • Systems & Distributed Systems</p>
+          <h2 id="about-title" class="title">Designing reliable, scalable systems that serve millions.</h2>
+          <p class="lead">I build distributed services, optimize performance, and design clean abstractions. My work focuses on low-latency systems, reliable eventing, and developer experience. Currently interviewing for SWE roles at Google.</p>
+
+          <div class="cta-row">
+            <a class="btn primary" href="#projects">View Projects</a>
+            <a class="btn ghost" href="assets/Narendra_K.pdf" download>Download Resume</a>
+          </div>
+
+          <div class="skills" aria-hidden="true">
+            <span>Java</span>
+            <span>Linux</span>
+            <span>Google Cloud</span>
+            <span>Cockroach DB</span>
+            <span>Grafana</span>
+            <span>Distributed Systems</span>
+            <span></span>
+          </div>
+        </div>
+
+        <aside class="hero-card reveal reveal--from-right" data-delay="120" aria-label="Profile summary">
+          <div class="profile-card">
+            <img src="assets/avatar.jpg" alt="Narendra portrait" width="96" height="96" />
+            <div class="profile-info">
+              <h3>Narendra</h3>
+              <p>Software Engineer — systems, infra, scalability</p>
+              <div class="socials">
+                <a href="https://github.com/Narendra-7216" target="_blank" rel="noopener noreferrer" aria-label="GitHub">GitHub</a>
+                <a href="https://linkedin.com/in/narendra-k-7a79bb205" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">LinkedIn</a>
+                <a href="mailto:NARENDRAK7216@GMAIL.COM" aria-label="Email">Email</a>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="projects reveal" id="projects" aria-labelledby="projects-title" data-delay="60">
+      <div class="container">
+        <h2 id="projects-title" class="section-title reveal reveal--from-left" data-delay="80">Selected Projects</h2>
+        <p class="muted reveal" data-delay="100">Concise summaries with impact metrics and links to code/case studies.</p>
+
+        <div class="project-grid">
+
+
+          <article class="project reveal reveal--from-bottom" aria-labelledby="p4-title" data-delay="320">
+            <div class="project-body">
+              <h3 id="p4-title">Distributed Key-Value Store with Replication and Recovery</h3>
+              <p>Designed and implemented a persistent distributed key-value store supporting GET, PUT, and DELETE operations. Implemented write-ahead logging (WAL) to ensure durability and enable crash recovery by replaying logs on restart. Built an in-memory index for O(1) reads and writes backed by append-only log storage. Designed leader–follower replication for consistent writes and data synchronization; analyzed consistency/availability tradeoffs and documented failure scenarios such as partial replication and node crashes.</p>
+              <div class="project-links">
+                <a href="#">Repository</a>
+                <a href="#">Case Study</a>
+              </div>
+            </div>
+            <div class="project-meta">
+              <div>Java • Distributed Systems • Databases</div>
+              <div>2024</div>
+            </div>
+          </article>
+
+          <article class="project reveal reveal--from-bottom" aria-labelledby="p5-title" data-delay="380">
+            <div class="project-body">
+              <h3 id="p5-title">Distributed Rate Limiter (Systems Project)</h3>
+              <p>Designed and implemented a distributed rate limiter to enforce per-user API request limits across horizontally scaled services. Implemented a token-bucket algorithm using Redis Lua scripts to ensure atomic request handling under high concurrency. Built the service stateless for seamless horizontal scaling, optimized request handling to O(1) supporting 10K+ req/s with sub-5ms latency, and implemented TTL-based cleanup to prevent stale state. Analyzed failure scenarios including Redis outages and burst traffic; documented tradeoffs between fail-open and fail-closed behavior.</p>
+              <div class="project-links">
+                <a href="#">Repository</a>
+                <a href="#">Case Study</a>
+              </div>
+            </div>
+            <div class="project-meta">
+              <div>Java • Spring Boot • Redis • Lua</div>
+              <div>2023</div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="experience" id="experience" aria-labelledby="exp-title">
+      <div class="container">
+        <h2 id="exp-title" class="section-title reveal reveal--from-left" data-delay="80">Experience</h2>
+
+        <div class="timeline">
+          <div class="job reveal reveal--from-left" data-delay="100">
+            <h3>Systems Software Engineer — Rubrik Inc., Bengaluru</h3>
+            <p class="muted">Feb 2024 – Feb 2025 (Intern), Feb 2025 – Present (Full-Time)</p>
+            <ul>
+              <li>Worked on large‑scale distributed systems and internal databases for Rubrik’s data protection platform.</li>
+              <li>Improved system stability and performance by identifying and fixing 14 critical bugs in production within a week.</li>
+              <li>Investigated and resolved complex customer‑reported issues across networking, storage, and system OS, reducing escalation turnaround time.</li>
+              <li>Wrote automation scripts to streamline internal debugging and diagnostics.</li>
+              <li>Authored internal Knowledge Base articles to support engineering team workflows.</li>
+              <li>Contributed to product feature enhancements and performance improvements.</li>
+            </ul>
+            <p class="muted"><strong>Technologies:</strong> Distributed Systems • Databases • Linux • Rubrik OS • Networking</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="education reveal" id="education" aria-labelledby="education-title" data-delay="100">
+      <div class="container">
+        <h2 id="education-title" class="section-title reveal reveal--from-left" data-delay="120">Education</h2>
+        <div class="education-body reveal" data-delay="140">
+          <h3>Bachelor of Technology in Computer Science and Engineering</h3>
+          <p class="muted">Jain University, Bengaluru — 2020 &ndash; 2024</p>
+          <p>CGPA: <strong>8.3</strong></p>
+          <p><strong>Relevant coursework:</strong></p>
+          <ul>
+            <li>Data Structures and Algorithms</li>
+            <li>Problem Solving</li>
+            <li>Database Management Systems</li>
+            <li>Operating Systems</li>
+            <li>Computer Networks</li>
+            <li>Object Oriented Programming Systems (OOPS)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact" id="contact" aria-labelledby="contact-title">
+      <div class="container">
+        <h2 id="contact-title" class="section-title reveal reveal--from-left" data-delay="80">Contact</h2>
+        <p class="reveal" data-delay="100">If you're hiring or want to discuss systems design, reach out — I'm actively interviewing for SWE roles at Google.</p>
+
+        <form class="contact-form reveal" id="contact-form" onsubmit="handleSubmit(event)" data-delay="140">
+          <div class="form-row">
+            <input id="name" name="name" required placeholder="Name" />
+            <input id="email" name="email" type="email" required placeholder="Email" />
+          </div>
+          <textarea id="message" name="message" required placeholder="Message"></textarea>
+          <button class="btn primary" type="submit">Send</button>
+        </form>
+      </div>
+    </section>
+
+    </main>
+  </div>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <p>© Narendra — Open to opportunities. Built with accessibility and performance in mind.</p>
+      <p class="muted">Connect: <a href="https://github.com/Narendra-7216" target="_blank" rel="noopener noreferrer">GitHub</a> • <a href="https://linkedin.com/in/narendra-k-7a79bb205" target="_blank" rel="noopener noreferrer">LinkedIn</a> • <a href="mailto:NARENDRAK7216@GMAIL.COM">Email</a></p>
+    </div>
+  </footer>
+
+  <script src="assets/app.js" defer></script>
+</body>
+</html>
